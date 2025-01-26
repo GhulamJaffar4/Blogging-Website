@@ -1,0 +1,48 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - develop  # Trigger the workflow on pull requests targeting the 'develop' branch
+
+jobs:
+  linting:
+    name: Lint HTML and CSS files
+    runs-on: ubuntu-latest  # Use an Ubuntu runner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Check out the code from the repository
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # Set up Node.js environment
+        with:
+          node-version: 16  # Specify the Node.js version
+
+      - name: Install linting tools
+        run: |
+          npm install htmlhint stylelint  # Install HTMLHint and Stylelint
+
+      - name: Lint HTML files
+        run: npx htmlhint "src/**/*.html"  # Lint all HTML files in the src folder
+
+      - name: Lint CSS files
+        run: npx stylelint "styles/**/*.css"  # Lint all CSS files in the styles folder
+
+  build:
+    name: Build Static Website
+    runs-on: ubuntu-latest  # Use an Ubuntu runner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Check out the code from the repository
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # Set up Node.js environment
+        with:
+          node-version: 16  # Specify the Node.js version
+
+      - name: Install Parcel
+        run: |
+          npm install parcel  # Install Parcel bundler
+
+      - name: Build the website
+        run: npx parcel build src/index.html  # Build the static website to ensure no errors
