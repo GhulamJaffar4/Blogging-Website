@@ -23,10 +23,10 @@ jobs:
           npm install htmlhint stylelint  # Install HTMLHint and Stylelint
 
       - name: Lint HTML files
-        run: npx htmlhint "src/**/*.html"  # Lint all HTML files in the src folder
+        run: npx htmlhint "**/*.html"  # Lint all HTML files in the src folder
 
       - name: Lint CSS files
-        run: npx stylelint "styles/**/*.css"  # Lint all CSS files in the styles folder
+        run: npx stylelint "**/*.css"  # Lint all CSS files in the styles folder
 
   build:
     name: Build Static Website
